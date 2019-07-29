@@ -4,21 +4,35 @@ from scipy.integrate import solve_ivp
 import plotly.graph_objs as go
 from plotly.offline import plot
 
-harvest_rates = [2e4, 5e4, 1e5, 2e5] # tons / year
 maximum_growth_rate = 0.5  # 1 / year
 carrying_capacity = 2e6  # tons
-fish0 = 2e5
-end_time = 33.  # years
 
+maximum_harvest_rate = 0.8 * 2.5e5 # tons / year
+ramp_start = 4. # years
+ramp_end = 6. # years
+
+fish0 = 2e5
+end_time = 33.
 ic = [fish0]
 
-def x_prime(t, x):
-    if x[0] > 0:
-        b=1
-    else:
-        b=0
+b = (1- ramp_end/ramp_start) / maximum_harvest_rate
+m = -b/ramp_start
 
-    xdot =  maximum_growth_rate*(1-x[0]/carrying_capacity)*x[0] - harvest_rates[1]*b
+print('m, b', m, b)
+
+def x_prime(t, x):
+
+    if t < ramp_start:
+        harvest_rate = 0
+    elif t > ramp_end:
+        harvest_rate = maximum_harvest_rate
+    else:
+        harvest_rate = m*t + b
+
+    if x[0] <= 0:
+        harvest_rate = 0
+
+    xdot =  maximum_growth_rate*(1-x[0]/carrying_capacity)*x[0] - harvest_rate
     return [xdot]
 
 
@@ -31,8 +45,6 @@ sol = solve_ivp(x_prime,
                     vectorized=False,
                     rtol=1e-4,
                     atol=1e-2)
-
-print(sol)
 
 fig = go.Figure()
 fig.add_trace(go.Scatter(x=sol.t, y=sol.y[0], name='s'))

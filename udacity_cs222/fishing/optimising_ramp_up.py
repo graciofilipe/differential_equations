@@ -12,7 +12,7 @@ ramp_start = 4. # years
 ramp_end = 6. # years
 
 fish0 = 2e5
-end_time = 10
+end_time = 15
 ic = [fish0]
 
 
@@ -54,7 +54,7 @@ def calculate_total_harvest(ramp_start, ramp_end):
                             y0=ic,
                             vectorized=False,
                             rtol=1e-4,
-                            atol=1e-2)
+                            atol=1e-4)
 
         yearly_harvest = []
         for t in tval:
@@ -77,8 +77,8 @@ optimizer = BayesianOptimization(
     random_state=1)
 
 optimizer.maximize(
-     init_points=111,
-     n_iter=33)
+     init_points=6,
+     n_iter=66)
 
 # |  61       |  6.2e+06  |  2.561    |  1.236    |
 

@@ -16,8 +16,7 @@ from plotly.offline import plot
 
 v0 = 120 * 1000 / 3600
 w0 = 120 * 1000 / 3600
-b0 =
-ic = [0, v0, w0, b0]
+ic = [0, v0, w0]
 
 h = 0.001 # s
 mass_quarter_car = 250. # kg
@@ -89,7 +88,6 @@ fig = go.Figure()
 fig.add_trace(go.Scatter(x=sol.t, y=sol.y[0], name='pos'))
 fig.add_trace(go.Scatter(x=sol.t, y=sol.y[1], name='v'))
 fig.add_trace(go.Scatter(x=sol.t, y=sol.y[2], name='w'))
-fig.add_trace(go.Scatter(x=t_list, y=b_list, name='bvals'))
 
 
 plot(fig)

@@ -23,14 +23,14 @@ for i in range(size):
 print('ic', ic)
 
 def x_prime(t, x):
-    
+
     z = np.array([ambient_temperature])
     left_gain =  x[:-1]
     left_gain = np.concatenate((z, left_gain))
     right_gain = x[1:]
     right_gain = np.concatenate((right_gain, z))
-    loss = 2*x
-    dif = - velocity *(left_gain + right_gain - loss)
+
+    dif = - velocity *(left_gain - right_gain)/2*dx
     return dif
 
 tval = np.linspace(0, end_time, 100)

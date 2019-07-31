@@ -11,7 +11,7 @@ thermal_diffusivity = 10. * 0.001 ** 2 # m2 / s
 dx = 0.001 # m
 size = 50 # grid units
 positions = dx * np.arange(size) # m
-end_time = 666 # s
+end_time = 111 # s
 
 ic = np.zeros([size, size])+ ambient_temperature
 

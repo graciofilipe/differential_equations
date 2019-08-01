@@ -23,14 +23,15 @@ for i in range(size):
 print('ic', ic)
 
 def x_prime(t, x):
-
     z = np.array([ambient_temperature])
-    left_gain =  x[:-1]
-    left_gain = np.concatenate((z, left_gain))
-    right_gain = x[1:]
-    right_gain = np.concatenate((right_gain, z))
+    x_augment = np.concatenate((z, x, z))
+    left_of =  x_augment[:-2]
+    right_of= x_augment[2:]
+    dif = - velocity *(right_of - left_of)/(2*dx)
+    # import ipdb; ipdb.set_trace()
+    dif[0] = 0
+    dif[-1] = 0
 
-    dif = - velocity *(left_gain - right_gain)/2*dx
     return dif
 
 tval = np.linspace(0, end_time, 100)
@@ -40,8 +41,8 @@ sol = solve_ivp(x_prime,
                     t_eval=tval,
                     y0=ic,
                     vectorized=False,
-                    rtol=1e-9,
-                    atol=1e-9)
+                    rtol=1e-12,
+                    atol=1e-12)
 
 
 t_plot = [0, 10, 20, 30]

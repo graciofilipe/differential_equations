@@ -23,12 +23,12 @@ for i in range(size):
 print('ic', ic)
 
 def x_prime(t, x):
+
     z = np.array([ambient_temperature])
     x_augment = np.concatenate((z, x, z))
     left_of =  x_augment[:-2]
     right_of= x_augment[2:]
     dif = - velocity *(right_of - left_of)/(2*dx)
-    # import ipdb; ipdb.set_trace()
     dif[0] = 0
     dif[-1] = 0
 

@@ -43,8 +43,6 @@ def x_prime(t, x):
     background[size-1,:] = 4*z
     background[0,:] = 4*z
 
-
-
     diff = (thermal_diffusivity/dx)*(background -4*x)
     xp = diff.reshape((size*size,))
 
